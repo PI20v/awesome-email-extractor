@@ -19,6 +19,11 @@ namespace AwesomeEmailExtractor
 
         private void executeButton_Click(object sender, EventArgs e)
         {
+            // Чистим предыдущий результат
+            toolStripStatusLabel.Text = "";
+            resultCountLabel.Text = "";
+            uniqueListBox.DataSource = null;
+
             // Объявляем список уникальных e-mail-ов
             List<string> uniqueEmails = new List<string>();
 
@@ -30,7 +35,7 @@ namespace AwesomeEmailExtractor
 
             // Выводим результат
             toolStripStatusLabel.Text = "Успех!";
-            label1.Text = $"Количество e-mail-ов в тексте: {count}";
+            resultCountLabel.Text = $"Количество e-mail-ов в тексте: {count}";
             uniqueListBox.DataSource = uniqueEmails;
         }
     }
