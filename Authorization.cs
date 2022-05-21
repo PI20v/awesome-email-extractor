@@ -3,6 +3,7 @@ using System.Text;
 using System.IO;
 using System.Security.Cryptography;
 using Microsoft.Data.Sqlite;
+using System.Collections.Generic;
 
 namespace AwesomeEmailExtractor
 {
@@ -12,7 +13,7 @@ namespace AwesomeEmailExtractor
         {
             SqliteCommand command = new SqliteCommand();
             command.Connection = Globals.db;
-            command.CommandText = "SELECT login, role_id FROM users WHERE login = @login AND password = @password";
+            command.CommandText = "SELECT * FROM users WHERE login = @login AND password = @password";
 
             SqliteParameter loginParam = new SqliteParameter("@login", login);
             command.Parameters.Add(loginParam);
@@ -24,7 +25,7 @@ namespace AwesomeEmailExtractor
 
             while (reader.Read())
             {
-                return new User(reader.GetString(0), (UserRoles)reader.GetInt32(1));
+                return new User(reader.GetInt32(0), reader.GetString(1), (UserRoles)reader.GetInt32(1));
             }
 
             throw new Exception("Пользователь не найден!");
@@ -54,7 +55,7 @@ namespace AwesomeEmailExtractor
                 throw new Exception($"Ошибка: {e.Message}");
             };
 
-            return new User(login, UserRoles.DEFAULT);
+            return Login(login, password);
         } 
 
         public static string EncryptPassword(string password)
@@ -75,13 +76,68 @@ namespace AwesomeEmailExtractor
     }
     public class User
     {
-        public string Login { get; set; }
+        public int ID { get; }
+        public string Login { get; }
         public UserRoles Role { get; }
 
-        public User(string login, UserRoles role)
+        public User(int id, string login, UserRoles role)
         {
+            ID = id;
             Login = login;
             Role = role;
+        }
+        
+    }
+
+    public class AdminUtils
+    {
+        public User User { get; set; }
+
+        public AdminUtils(User user)
+        {
+            User = user;
+        }
+        public void setRole(string login, UserRoles role)
+        {
+            if (User.Role != UserRoles.ADMIN)
+            {
+                throw new Exception("Недостаточно прав!");
+            }
+
+            SqliteCommand command = new SqliteCommand();
+            command.Connection = Globals.db;
+            command.CommandText = "UPDATE users SET role_id = @role WHERE login = @login";
+
+            SqliteParameter roleParam = new SqliteParameter("@role", (int)role);
+            command.Parameters.Add(roleParam);
+
+            SqliteParameter loginParam = new SqliteParameter("@login", login);
+            command.Parameters.Add(loginParam);
+
+            command.ExecuteNonQuery();
+        }
+
+        public List<User> getAllUsers()
+        {
+            if (User.Role != UserRoles.ADMIN)
+            {
+                throw new Exception("Недостаточно прав!");
+            }
+
+            SqliteCommand command = new SqliteCommand();
+            command.Connection = Globals.db;
+            command.CommandText = "SELECT * FROM users";
+
+            SqliteDataReader reader = command.ExecuteReader();
+
+            List<User> users = new List<User>();
+
+            while (reader.Read())
+            {
+                users.Add(new User(reader.GetInt32(0), reader.GetString(1), (UserRoles)reader.GetInt32(2)));
+            }
+
+            return users;
         }
     }
 }

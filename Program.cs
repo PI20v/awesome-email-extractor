@@ -17,7 +17,13 @@ namespace AwesomeEmailExtractor
         static void Main()
         {
             preMain();
+
+            User user = new User(1, "admin", UserRoles.ADMIN);
+            AdminUtils admin = new AdminUtils(user);
+
             
+
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
