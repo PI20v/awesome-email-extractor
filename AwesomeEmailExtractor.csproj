@@ -79,6 +79,7 @@
     <Compile Include="Authorization.cs" />
     <Compile Include="ExtactEmailsAlgorithm.cs" />
     <Compile Include="Globals.cs" />
+    <Compile Include="Logs.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

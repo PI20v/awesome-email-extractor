@@ -18,11 +18,7 @@ namespace AwesomeEmailExtractor
         {
             preMain();
 
-            User user = new User(1, "admin", UserRoles.ADMIN);
-            AdminUtils admin = new AdminUtils(user);
-
-            
-
+            Logs.GetLogs();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -37,11 +33,16 @@ namespace AwesomeEmailExtractor
             {
                 Directory.CreateDirectory(Globals.getAppDirectory());
             }
-
+            
             Globals.db = new SqliteConnection("Data Source=" + Globals.getAppDatabase());
             Globals.db.Open();
 
             Globals.CreateTables();
+
+            Globals.logsDb = new SqliteConnection("Data Source=" + Globals.getPathAppLogs());
+            Globals.logsDb.Open();
+
+            Globals.CreateLogsTable();
         }
 
         static void postMain()
