@@ -18,11 +18,11 @@ namespace AwesomeEmailExtractor
         {
             preMain();
 
-            Logs.GetLogs();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+
+            new AuthorizationForm().Show();
+            Application.Run();
 
             postMain();
         }

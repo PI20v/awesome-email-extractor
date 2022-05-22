@@ -15,6 +15,8 @@ namespace AwesomeEmailExtractor
         public static SqliteConnection db { get; set; }
         public static SqliteConnection logsDb { get; set; }
 
+        public static User currentUser { get; set; } 
+        
         public static string getAppDirectory()
         {
             return Path.Combine(

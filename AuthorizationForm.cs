@@ -17,5 +17,19 @@ namespace AwesomeEmailExtractor
             InitializeComponent();
         }
 
+        private void loginButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Globals.currentUser = Authorization.Login(entryLogin.Text, entryPassword.Text);
+                this.Close();
+
+                new MainForm().Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

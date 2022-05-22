@@ -45,6 +45,7 @@
             this.loginButton.TabIndex = 0;
             this.loginButton.Text = "Авторизоваться";
             this.loginButton.UseVisualStyleBackColor = true;
+            this.loginButton.Click += new System.EventHandler(this.loginButton_Click);
             // 
             // registerButton
             // 
@@ -89,6 +90,7 @@
             this.entryPassword.Name = "entryPassword";
             this.entryPassword.Size = new System.Drawing.Size(195, 20);
             this.entryPassword.TabIndex = 4;
+            this.entryPassword.UseSystemPasswordChar = true;
             // 
             // AuthorizationForm
             // 
@@ -101,6 +103,8 @@
             this.Controls.Add(this.entryLogin);
             this.Controls.Add(this.registerButton);
             this.Controls.Add(this.loginButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "AuthorizationForm";
             this.Text = "Авторизоваться";
             this.ResumeLayout(false);
