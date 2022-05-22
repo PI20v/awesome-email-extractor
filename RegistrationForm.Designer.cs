@@ -55,6 +55,7 @@
             this.entryPassword.Name = "entryPassword";
             this.entryPassword.Size = new System.Drawing.Size(195, 20);
             this.entryPassword.TabIndex = 10;
+            this.entryPassword.UseSystemPasswordChar = true;
             // 
             // label1
             // 
@@ -79,9 +80,10 @@
             this.registerButton.Location = new System.Drawing.Point(14, 135);
             this.registerButton.Name = "registerButton";
             this.registerButton.Size = new System.Drawing.Size(364, 23);
-            this.registerButton.TabIndex = 7;
+            this.registerButton.TabIndex = 6;
             this.registerButton.Text = "Зарегистрироваться";
             this.registerButton.UseVisualStyleBackColor = true;
+            this.registerButton.Click += new System.EventHandler(this.registerButton_Click);
             // 
             // loginButton
             // 
@@ -89,7 +91,7 @@
             this.loginButton.Location = new System.Drawing.Point(14, 187);
             this.loginButton.Name = "loginButton";
             this.loginButton.Size = new System.Drawing.Size(364, 23);
-            this.loginButton.TabIndex = 6;
+            this.loginButton.TabIndex = 7;
             this.loginButton.Text = "Авторизоваться";
             this.loginButton.UseVisualStyleBackColor = true;
             this.loginButton.Click += new System.EventHandler(this.loginButton_Click);
@@ -121,7 +123,6 @@
             this.label4.Size = new System.Drawing.Size(178, 18);
             this.label4.TabIndex = 14;
             this.label4.Text = "Уже зарегистрированы?";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // RegistrationForm
             // 
@@ -140,6 +141,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "RegistrationForm";
             this.Text = "Зарегистрироваться";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.RegistrationForm_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 
