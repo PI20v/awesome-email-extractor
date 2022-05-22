@@ -84,6 +84,7 @@
       <DependentUpon>AuthorizationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ExtactEmailsAlgorithm.cs" />
+    <Compile Include="FormManager.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Logs.cs" />
     <Compile Include="MainForm.cs">

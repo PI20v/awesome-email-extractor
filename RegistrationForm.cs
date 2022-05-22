@@ -17,16 +17,36 @@ namespace AwesomeEmailExtractor
             InitializeComponent();
         }
 
-        private void label4_Click(object sender, EventArgs e)
+        private void registerButton_Click(object sender, EventArgs e)
         {
+            if (!string.Equals(entryPassword.Text, entryRePassword.Text))
+            {
+                MessageBox.Show("Пароли не совпадают!");
+                return;
+            }
 
+            try
+            {
+                Globals.currentUser = Authorization.Register(entryLogin.Text, entryPassword.Text);
+
+                var form = FormManager.Current.CreateForm<MainForm>();
+                FormManager.Current.Navigate(this, form);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            AuthorizationForm form = FormManager.Current.CreateForm<AuthorizationForm>();
+            FormManager.Current.Navigate(this, form);
+        }
 
-            new AuthorizationForm().Show();
+        private void RegistrationForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
         }
     }
 }

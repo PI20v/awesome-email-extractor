@@ -22,9 +22,9 @@ namespace AwesomeEmailExtractor
             try
             {
                 Globals.currentUser = Authorization.Login(entryLogin.Text, entryPassword.Text);
-                this.Close();
 
-                new MainForm().Show();
+                var mainForm = FormManager.Current.CreateForm<MainForm>();
+                FormManager.Current.Navigate(this, mainForm);
             }
             catch (Exception ex)
             {
@@ -34,9 +34,8 @@ namespace AwesomeEmailExtractor
 
         private void registerButton_Click(object sender, EventArgs e)
         {
-            this.Close();
-
-            new RegistrationForm().Show();
+            var form = FormManager.Current.CreateForm<RegistrationForm>();
+            FormManager.Current.Navigate(this, form);
         }
     }
 }

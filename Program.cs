@@ -20,9 +20,7 @@ namespace AwesomeEmailExtractor
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            new AuthorizationForm().Show();
-            Application.Run();
+            Application.Run(FormManager.Current);
 
             postMain();
         }
