@@ -13,7 +13,7 @@ namespace AwesomeEmailExtractor
         {
             SqliteCommand command = new SqliteCommand();
             command.Connection = Globals.db;
-            command.CommandText = "SELECT * FROM users WHERE login = @login AND password = @password";
+            command.CommandText = "SELECT id, login, role_id FROM users WHERE login = @login AND password = @password";
 
             SqliteParameter loginParam = new SqliteParameter("@login", login);
             command.Parameters.Add(loginParam);
@@ -25,7 +25,7 @@ namespace AwesomeEmailExtractor
 
             while (reader.Read())
             {
-                return new User(reader.GetInt32(0), reader.GetString(1), (UserRoles)reader.GetInt32(1));
+                return new User(reader.GetInt32(0), reader.GetString(1), (UserRoles)reader.GetInt32(2));
             }
 
             throw new Exception("Пользователь не найден!");
