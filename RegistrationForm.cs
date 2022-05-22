@@ -10,18 +10,23 @@ using System.Windows.Forms;
 
 namespace AwesomeEmailExtractor
 {
-    public partial class AuthorizationForm : Form
+    public partial class RegistrationForm : Form
     {
-        public AuthorizationForm()
+        public RegistrationForm()
         {
             InitializeComponent();
         }
 
-        private void registerButton_Click(object sender, EventArgs e)
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void loginButton_Click(object sender, EventArgs e)
         {
             this.Close();
 
-            new RegistrationForm().Show();
+            new AuthorizationForm().Show();
         }
     }
 }
