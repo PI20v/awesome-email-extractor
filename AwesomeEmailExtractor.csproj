@@ -77,6 +77,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authorization.cs" />
+    <Compile Include="AuthorizationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuthorizationForm.Designer.cs">
+      <DependentUpon>AuthorizationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExtactEmailsAlgorithm.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Logs.cs" />
@@ -88,6 +94,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AuthorizationForm.resx">
+      <DependentUpon>AuthorizationForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
