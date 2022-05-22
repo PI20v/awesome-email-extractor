@@ -31,5 +31,12 @@ namespace AwesomeEmailExtractor
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void registerButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+            new RegistrationForm().Show();
+        }
     }
 }
