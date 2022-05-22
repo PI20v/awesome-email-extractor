@@ -15,6 +15,8 @@ namespace AwesomeEmailExtractor
         public MainForm()
         {
             InitializeComponent();
+
+            administrationToolStripMenuItem.Enabled = Globals.currentUser.Role == UserRoles.ADMIN;
         }
         
         private void executeButton_Click(object sender, EventArgs e)
