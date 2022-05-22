@@ -1,6 +1,6 @@
 ﻿namespace AwesomeEmailExtractor
 {
-    partial class Authorisation
+    partial class AuthorizationForm
     {
         /// <summary>
         /// Required designer variable.
@@ -90,7 +90,7 @@
             this.entryPassword.Size = new System.Drawing.Size(195, 20);
             this.entryPassword.TabIndex = 4;
             // 
-            // Authorisation
+            // AuthorizationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -101,8 +101,8 @@
             this.Controls.Add(this.entryLogin);
             this.Controls.Add(this.registerButton);
             this.Controls.Add(this.loginButton);
-            this.Name = "Authorisation";
-            this.Text = "Authorisation";
+            this.Name = "AuthorizationForm";
+            this.Text = "Авторизоваться";
             this.ResumeLayout(false);
             this.PerformLayout();
 

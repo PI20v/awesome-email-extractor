@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace AwesomeEmailExtractor
 {
-    public partial class Authorisation : Form
+    public partial class AuthorizationForm : Form
     {
-        public Authorisation()
+        public AuthorizationForm()
         {
             InitializeComponent();
         }

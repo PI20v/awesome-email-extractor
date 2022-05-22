@@ -46,11 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authorisation.cs">
+    <Compile Include="AuthorizationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Authorisation.Designer.cs">
-      <DependentUpon>Authorisation.cs</DependentUpon>
+    <Compile Include="AuthorizationForm.Designer.cs">
+      <DependentUpon>AuthorizationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ExtactEmailsAlgorithm.cs" />
     <Compile Include="MainForm.cs">
@@ -61,8 +61,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Authorisation.resx">
-      <DependentUpon>Authorisation.cs</DependentUpon>
+    <EmbeddedResource Include="AuthorizationForm.resx">
+      <DependentUpon>AuthorizationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
