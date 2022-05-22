@@ -59,5 +59,12 @@ namespace AwesomeEmailExtractor
             SettingsForm settingsForm = FormManager.Current.CreateForm<SettingsForm>();
             settingsForm.ShowDialog(this);
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Globals.currentUser = null;
+            AuthorizationForm authorization = FormManager.Current.CreateForm<AuthorizationForm>();
+            FormManager.Current.Navigate(this, authorization);
+        }
     }
 }
