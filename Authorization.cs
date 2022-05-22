@@ -87,6 +87,17 @@ namespace AwesomeEmailExtractor
             Role = role;
         }
         
+        public void Delete()
+        {
+            SqliteCommand command = new SqliteCommand();
+            command.Connection = Globals.db;
+            command.CommandText = "DELETE FROM users WHERE id = @id";
+
+            SqliteParameter loginParam = new SqliteParameter("@id", ID);
+            command.Parameters.Add(loginParam);
+
+            command.ExecuteNonQuery();
+        }
     }
 
     public class AdminUtils

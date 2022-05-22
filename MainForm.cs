@@ -53,5 +53,11 @@ namespace AwesomeEmailExtractor
                     { "uniqueEmails", uniqueEmails } 
                 });
         }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsForm = FormManager.Current.CreateForm<SettingsForm>();
+            settingsForm.ShowDialog(this);
+        }
     }
 }
