@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "fe70a2f9-d831-462e-8705-b14623544f1c": {
+      "ProjectGuid": "fe70a2f9-d831-462e-8705-b14623544f1c",
+      "DisplayName": "AwesomeEmailExtractor",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
