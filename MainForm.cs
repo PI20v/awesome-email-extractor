@@ -15,6 +15,8 @@ namespace AwesomeEmailExtractor
         public MainForm()
         {
             InitializeComponent();
+
+            administrationToolStripMenuItem.Enabled = Globals.currentUser.Role == UserRoles.ADMIN;
         }
         
         private void executeButton_Click(object sender, EventArgs e)
@@ -52,6 +54,19 @@ namespace AwesomeEmailExtractor
                     { "count", count }, 
                     { "uniqueEmails", uniqueEmails } 
                 });
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsForm = FormManager.Current.CreateForm<SettingsForm>();
+            settingsForm.ShowDialog(this);
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Globals.currentUser = null;
+            AuthorizationForm authorization = FormManager.Current.CreateForm<AuthorizationForm>();
+            FormManager.Current.Navigate(this, authorization);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace AwesomeEmailExtractor
         {
             SqliteCommand command = new SqliteCommand();
             command.Connection = Globals.db;
-            command.CommandText = "SELECT * FROM users WHERE login = @login AND password = @password";
+            command.CommandText = "SELECT id, login, role_id FROM users WHERE login = @login AND password = @password";
 
             SqliteParameter loginParam = new SqliteParameter("@login", login);
             command.Parameters.Add(loginParam);
@@ -25,7 +25,7 @@ namespace AwesomeEmailExtractor
 
             while (reader.Read())
             {
-                return new User(reader.GetInt32(0), reader.GetString(1), (UserRoles)reader.GetInt32(1));
+                return new User(reader.GetInt32(0), reader.GetString(1), (UserRoles)reader.GetInt32(2));
             }
 
             throw new Exception("Пользователь не найден!");
@@ -87,6 +87,32 @@ namespace AwesomeEmailExtractor
             Role = role;
         }
         
+        public void Delete()
+        {
+            SqliteCommand command = new SqliteCommand();
+            command.Connection = Globals.db;
+            command.CommandText = "DELETE FROM users WHERE id = @id;";
+
+            SqliteParameter idParam = new SqliteParameter("@id", ID);
+            command.Parameters.Add(idParam);
+
+            command.ExecuteNonQuery();
+        }
+
+        public void ChangePassword(string password)
+        {
+            SqliteCommand command = new SqliteCommand();
+            command.Connection = Globals.db;
+            command.CommandText = "UPDATE users SET password = @password WHERE id = @id;";
+
+            SqliteParameter idParam = new SqliteParameter("@id", ID);
+            command.Parameters.Add(idParam);
+
+            SqliteParameter passwordParam = new SqliteParameter("@password", Authorization.EncryptPassword(password));
+            command.Parameters.Add(passwordParam);
+            
+            command.ExecuteNonQuery();
+        }
     }
 
     public class AdminUtils
