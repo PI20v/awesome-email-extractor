@@ -19,6 +19,8 @@ namespace AwesomeEmailExtractor
         public enum Action
         {
             Execute,
+            Login,
+            Registration
         }
 
         public static void Log(User user, Action action, Dictionary<string, object> options)
@@ -68,7 +70,15 @@ namespace AwesomeEmailExtractor
             command.Parameters.AddWithValue("@dbpath", Globals.getAppDatabase());
             command.ExecuteNonQuery();
             
-            command.CommandText = "SELECT user_id, appDB.users.login, appDB.users.id as role_id, date, action, message FROM logs LEFT JOIN appDB.users ON logs.user_id = appDB.users.id ORDER BY date DESC ";
+            command.CommandText = @"
+                SELECT 
+                    user_id,
+                    CASE WHEN appDB.users.login is NULL THEN 'Deleted_' || user_id ELSE appDB.users.login END AS login
+                    appDB.users.role,
+                    date,
+                    action,
+                    message
+                from logs LEFT JOIN appDB.users on logs.user_id = appDB.users.id ORDER BY date DESC";
 
             SqliteDataReader reader = command.ExecuteReader();
 
@@ -100,10 +110,16 @@ namespace AwesomeEmailExtractor
                     $"Найдено {count} email-ов.\n" +
                     $"Список уникальных: {String.Join(", ", uniqueEmails)}.";
             }
-            else
+            if (action == Action.Login)
             {
-                return "";
+                return "Пользователь вошел в систему.";
             }
+            if (action == Action.Registration)
+            {
+                return "Пользователь зарегистрировался в системе.";
+            }
+
+            return "";
         }
     }
 }

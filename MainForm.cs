@@ -45,7 +45,7 @@ namespace AwesomeEmailExtractor
             uniqueListBox.DataSource = uniqueEmails;
 
             Logs.Log(
-                new User(1, "", UserRoles.ADMIN), 
+                Globals.currentUser, 
                 Logs.Action.Execute, 
                 new Dictionary<string, object>() { 
                     { "sourceText", sourceText }, 

@@ -22,6 +22,7 @@ namespace AwesomeEmailExtractor
             try
             {
                 Globals.currentUser = Authorization.Login(entryLogin.Text, entryPassword.Text);
+                Logs.Log(Globals.currentUser, Logs.Action.Login, new Dictionary<string, object>());
 
                 var mainForm = FormManager.Current.CreateForm<MainForm>();
                 FormManager.Current.Navigate(this, mainForm);

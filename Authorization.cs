@@ -117,6 +117,22 @@ namespace AwesomeEmailExtractor
             command.ExecuteNonQuery();
         }
 
+        public void deleteUser(string login)
+        {
+            if (User.Role != UserRoles.ADMIN)
+            {
+                throw new Exception("Недостаточно прав!");
+            }
+
+            SqliteCommand command = new SqliteCommand();
+            command.Connection = Globals.db;
+            command.CommandText = "DELETE FROM users WHERE login = @login";
+
+            SqliteParameter loginParam = new SqliteParameter("@login", login);
+            command.Parameters.Add(loginParam);
+
+            command.ExecuteNonQuery();
+        }
         public List<User> getAllUsers()
         {
             if (User.Role != UserRoles.ADMIN)
