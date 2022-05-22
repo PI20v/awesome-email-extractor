@@ -24,13 +24,25 @@ namespace AwesomeEmailExtractor
             if (result == DialogResult.Yes)
             {
                 Globals.currentUser.Delete();
-                MessageBox.Show("Аккаунт удален");
+                MessageBox.Show("Аккаунт удален!");
 
                 this.Close();
                 
                 AuthorizationForm authorization = FormManager.Current.CreateForm<AuthorizationForm>();
                 FormManager.Current.Navigate(this.Owner, authorization);
             }
+        }
+
+        private void changePasswordButton_Click(object sender, EventArgs e)
+        {
+            if (!string.Equals(entryNewPassword.Text, entryRePassword.Text))
+            {
+                MessageBox.Show("Пароли не совпадают!");
+                return;
+            }
+
+            Globals.currentUser.ChangePassword(entryNewPassword.Text);
+            MessageBox.Show("Пароль изменен!");
         }
     }
 }

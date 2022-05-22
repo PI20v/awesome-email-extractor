@@ -91,11 +91,26 @@ namespace AwesomeEmailExtractor
         {
             SqliteCommand command = new SqliteCommand();
             command.Connection = Globals.db;
-            command.CommandText = "DELETE FROM users WHERE id = @id";
+            command.CommandText = "DELETE FROM users WHERE id = @id;";
 
-            SqliteParameter loginParam = new SqliteParameter("@id", ID);
-            command.Parameters.Add(loginParam);
+            SqliteParameter idParam = new SqliteParameter("@id", ID);
+            command.Parameters.Add(idParam);
 
+            command.ExecuteNonQuery();
+        }
+
+        public void ChangePassword(string password)
+        {
+            SqliteCommand command = new SqliteCommand();
+            command.Connection = Globals.db;
+            command.CommandText = "UPDATE users SET password = @password WHERE id = @id;";
+
+            SqliteParameter idParam = new SqliteParameter("@id", ID);
+            command.Parameters.Add(idParam);
+
+            SqliteParameter passwordParam = new SqliteParameter("@password", Authorization.EncryptPassword(password));
+            command.Parameters.Add(passwordParam);
+            
             command.ExecuteNonQuery();
         }
     }
