@@ -15,10 +15,21 @@ namespace AwesomeEmailExtractor
         public MainForm()
         {
             InitializeComponent();
-        }
 
+            administrationToolStripMenuItem.Enabled = Globals.currentUser.Role == UserRoles.ADMIN;
+        }
+        
         private void executeButton_Click(object sender, EventArgs e)
         {
+            // Получаем исходный текст из sourceRichTextBox
+            string sourceText = sourceRichTextBox.Text;
+
+            if (sourceText.Length == 0)
+            {
+                MessageBox.Show("Введите текст в поле исходного текста", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             // Чистим предыдущий результат
             toolStripStatusLabel.Text = "";
             resultCountLabel.Text = "";
@@ -27,9 +38,6 @@ namespace AwesomeEmailExtractor
             // Объявляем список уникальных e-mail-ов
             List<string> uniqueEmails = new List<string>();
 
-            // Получаем исходный текст из sourceRichTextBox
-            string sourceText = sourceRichTextBox.Text;
-
             // Вызываем метод для извлечения e-mail-ов
             int count = ExtactEmailsAlgorithm.Extract(sourceText, out uniqueEmails);
 
@@ -37,6 +45,28 @@ namespace AwesomeEmailExtractor
             toolStripStatusLabel.Text = "Успех!";
             resultCountLabel.Text = $"Количество e-mail-ов в тексте: {count}";
             uniqueListBox.DataSource = uniqueEmails;
+
+            Logs.Log(
+                Globals.currentUser, 
+                Logs.Action.Execute, 
+                new Dictionary<string, object>() { 
+                    { "sourceText", sourceText }, 
+                    { "count", count }, 
+                    { "uniqueEmails", uniqueEmails } 
+                });
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsForm = FormManager.Current.CreateForm<SettingsForm>();
+            settingsForm.ShowDialog(this);
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Globals.currentUser = null;
+            AuthorizationForm authorization = FormManager.Current.CreateForm<AuthorizationForm>();
+            FormManager.Current.Navigate(this, authorization);
         }
     }
 }
