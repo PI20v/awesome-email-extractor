@@ -74,5 +74,11 @@ namespace AwesomeEmailExtractor
             JournalForm journalForm = FormManager.Current.CreateForm<JournalForm>();
             journalForm.ShowDialog(this);
         }
+
+        private void administrationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AdministrationForm administrationForm = FormManager.Current.CreateForm<AdministrationForm>();
+            administrationForm.ShowDialog(this);
+        }
     }
 }
