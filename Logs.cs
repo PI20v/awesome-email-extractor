@@ -10,10 +10,10 @@ namespace AwesomeEmailExtractor
     public class Logs
     {
         public class LogData {
-            public User user;
-            public string date;
-            public Action action;
-            public string message;
+            public User User { get; set; }
+            public string Date { get; set; }
+            public Action Action { get; set; }
+            public string Message { get; set; }
         }
 
         public enum Action
@@ -37,33 +37,49 @@ namespace AwesomeEmailExtractor
             command.ExecuteNonQuery();
         }
 
-        public static List<LogData> GetLogs(User user)
+        public static List<LogData> GetLogsList(User user)
         {
-            SqliteCommand command = new SqliteCommand();
-            command.Connection = Globals.logsDb;
-
-            command.CommandText = "SELECT date, action, message FROM logs WHERE user_id = @user_id ORDER BY date DESC";
-            command.Parameters.AddWithValue("@user_id", user.ID);
-
-            SqliteDataReader reader = command.ExecuteReader();
+            SqliteDataReader reader = GetLogsDataReader(user);
 
             List<LogData> logs = new List<LogData>();
             while (reader.Read())
             {
                 logs.Add(new LogData()
                 {
-                    user = user,
-                    date = reader.GetString(0),
-                    action = (Action)reader.GetInt32(1),
-                    message = reader.GetString(2)
+                    User = user,
+                    Date = reader.GetString(0),
+                    Action = (Action)reader.GetInt32(1),
+                    Message = reader.GetString(2)
                 });
             }
+
+            reader.Close();
 
             return logs;
         }
 
-        public static List<LogData> GetLogs()
+        private static SqliteDataReader GetLogsDataReader(User user)
         {
+            if (Globals.currentUser.ID != user.ID && Globals.currentUser.Role != UserRoles.ADMIN)
+            {
+                throw new Exception("У вас нет прав на просмотр логов");
+            }
+
+            SqliteCommand command = new SqliteCommand();
+            command.Connection = Globals.logsDb;
+            command.CommandText = "SELECT date, action, message FROM logs WHERE user_id = @user_id ORDER BY date DESC";
+            command.Parameters.AddWithValue("@user_id", user.ID);
+
+            return command.ExecuteReader();
+        }        
+
+        public static List<LogData> GetLogsList()
+        {
+            if (Globals.currentUser.Role != UserRoles.ADMIN)
+            {
+                throw new Exception("У вас нет прав на просмотр логов");
+            }
+
             SqliteCommand command = new SqliteCommand();
             command.Connection = Globals.logsDb;
             command.CommandText = "ATTACH DATABASE @dbpath AS appDB";
@@ -87,10 +103,10 @@ namespace AwesomeEmailExtractor
             {
                 logs.Add(new LogData()
                 {
-                    user = new User(reader.GetInt32(0), reader.GetString(1), (UserRoles)reader.GetInt32(2)),
-                    date = reader.GetString(3),
-                    action = (Action)reader.GetInt32(4),
-                    message = reader.GetString(5)
+                    User = new User(reader.GetInt32(0), reader.GetString(1), (UserRoles)reader.GetInt32(2)),
+                    Date = reader.GetString(3),
+                    Action = (Action)reader.GetInt32(4),
+                    Message = reader.GetString(5)
                 });
             }
 

@@ -72,6 +72,9 @@ namespace AwesomeEmailExtractor
             command.CommandText = "CREATE TABLE IF NOT EXISTS logs (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, date TEXT NOT NULL, action INTEGER NOT NULL, message TEXT NOT NULL, FOREIGN KEY(action) REFERENCES logs_actions(id));";
             command.ExecuteNonQuery();
 
+            command.CommandText = "ATTACH DATABASE @dbpath AS appDB";
+            command.Parameters.AddWithValue("@dbpath", Globals.getAppDatabase());
+            command.ExecuteNonQuery();
         }
 
         public static void CreateTables()

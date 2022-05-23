@@ -68,5 +68,11 @@ namespace AwesomeEmailExtractor
             AuthorizationForm authorization = FormManager.Current.CreateForm<AuthorizationForm>();
             FormManager.Current.Navigate(this, authorization);
         }
+
+        private void journalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            JournalForm journalForm = FormManager.Current.CreateForm<JournalForm>();
+            journalForm.ShowDialog(this);
+        }
     }
 }
