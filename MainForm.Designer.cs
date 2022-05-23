@@ -41,6 +41,7 @@
             this.administrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.journalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resultStatusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -57,7 +58,7 @@
             "bob@example.com"});
             this.uniqueListBox.Location = new System.Drawing.Point(424, 32);
             this.uniqueListBox.Name = "uniqueListBox";
-            this.uniqueListBox.Size = new System.Drawing.Size(225, 304);
+            this.uniqueListBox.Size = new System.Drawing.Size(225, 324);
             this.uniqueListBox.TabIndex = 0;
             // 
             // sourceRichTextBox
@@ -133,6 +134,7 @@
             // аккаунтToolStripMenuItem
             // 
             this.аккаунтToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.journalToolStripMenuItem,
             this.settingsToolStripMenuItem,
             this.administrationToolStripMenuItem,
             this.exitToolStripMenuItem});
@@ -165,6 +167,13 @@
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.helpToolStripMenuItem.Text = "Справка";
+            // 
+            // journalToolStripMenuItem
+            // 
+            this.journalToolStripMenuItem.Name = "journalToolStripMenuItem";
+            this.journalToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.journalToolStripMenuItem.Text = "Журнал";
+            this.journalToolStripMenuItem.Click += new System.EventHandler(this.journalToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -205,6 +214,7 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem administrationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem journalToolStripMenuItem;
     }
 }
 

@@ -113,6 +113,11 @@ namespace AwesomeEmailExtractor
             
             command.ExecuteNonQuery();
         }
+
+        new public string ToString()
+        {
+            return this.Login;
+        }
     }
 
     public class AdminUtils
