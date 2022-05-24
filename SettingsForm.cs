@@ -24,6 +24,7 @@ namespace AwesomeEmailExtractor
             if (result == DialogResult.Yes)
             {
                 Globals.currentUser.Delete();
+                Logs.Log(Globals.currentUser, Logs.Action.DeleteAccount, new Dictionary<string, object>());
                 MessageBox.Show("Аккаунт удален!");
 
                 this.Close();
@@ -42,6 +43,7 @@ namespace AwesomeEmailExtractor
             }
 
             Globals.currentUser.ChangePassword(entryNewPassword.Text);
+            Logs.Log(Globals.currentUser, Logs.Action.ChangePassword, new Dictionary<string, object>());
             MessageBox.Show("Пароль изменен!");
         }
     }
