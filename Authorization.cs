@@ -86,7 +86,14 @@ namespace AwesomeEmailExtractor
             Login = login;
             Role = role;
         }
-        
+
+        public User(User user)
+        {
+            ID = user.ID;
+            Login = user.Login;
+            Role = user.Role;
+        }
+
         public void Delete()
         {
             SqliteCommand command = new SqliteCommand();
@@ -130,11 +137,6 @@ namespace AwesomeEmailExtractor
         }
         public void setRole(string login, UserRoles role)
         {
-            if (User.Role != UserRoles.ADMIN)
-            {
-                throw new Exception("Недостаточно прав!");
-            }
-
             SqliteCommand command = new SqliteCommand();
             command.Connection = Globals.db;
             command.CommandText = "UPDATE users SET role_id = @role WHERE login = @login";
@@ -147,7 +149,6 @@ namespace AwesomeEmailExtractor
 
             command.ExecuteNonQuery();
         }
-
         public void deleteUser(string login)
         {
             if (User.Role != UserRoles.ADMIN)
@@ -164,7 +165,7 @@ namespace AwesomeEmailExtractor
 
             command.ExecuteNonQuery();
         }
-        public List<User> getAllUsers()
+        public List<User> GetAllUsers()
         {
             if (User.Role != UserRoles.ADMIN)
             {
@@ -173,7 +174,7 @@ namespace AwesomeEmailExtractor
 
             SqliteCommand command = new SqliteCommand();
             command.Connection = Globals.db;
-            command.CommandText = "SELECT * FROM users";
+            command.CommandText = "SELECT id, login, role_id FROM users";
 
             SqliteDataReader reader = command.ExecuteReader();
 
@@ -185,6 +186,35 @@ namespace AwesomeEmailExtractor
             }
 
             return users;
+        }
+    
+        public void editUser(User user)
+        {
+            if (User.Role != UserRoles.ADMIN)
+            {
+                throw new Exception("Недостаточно прав!");
+            }
+
+            SqliteCommand command = new SqliteCommand();
+            command.Connection = Globals.db;
+            command.CommandText = "UPDATE users SET login = @login, role_id = @role_id WHERE id = @id";
+            
+            SqliteParameter idParam = new SqliteParameter("@id", user.ID);
+            command.Parameters.Add(idParam);
+
+            SqliteParameter loginParam = new SqliteParameter("@login", user.Login);
+            command.Parameters.Add(loginParam);
+
+            SqliteParameter roleParam = new SqliteParameter("@role_id", user.Role);
+            command.Parameters.Add(roleParam);
+
+            command.ExecuteNonQuery();
+        }
+
+        public void editUser(User user, string password)
+        {
+            editUser(user);
+            user.ChangePassword(password);
         }
     }
 }

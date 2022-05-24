@@ -30,6 +30,12 @@ namespace AwesomeEmailExtractor
             var Row = reader.Read();
 
             pathToJournalTextBox.Text = reader.GetString(0);
+
+            AdminUtils adminUtils = new AdminUtils(Globals.currentUser);
+
+            var users = adminUtils.GetAllUsers();
+
+            usersDataGridView.DataSource = users;            
         }
 
         private void browseButton_Click(object sender, EventArgs e)
@@ -48,6 +54,31 @@ namespace AwesomeEmailExtractor
                 command.ExecuteNonQuery();
             }
 
+        }
+
+        private void journalTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void editUserButton_Click(object sender, EventArgs e)
+        {
+            if (usersDataGridView.SelectedRows.Count == 1)
+            {
+                var user = usersDataGridView.SelectedRows[0].DataBoundItem as User;
+
+                var form = new EditUserForm();
+                form.User = user;
+                
+                form.ShowDialog();
+
+                AdminUtils adminUtils = new AdminUtils(Globals.currentUser);
+                var users = adminUtils.GetAllUsers();
+                usersDataGridView.DataSource = users;
+            } else
+            {
+                MessageBox.Show("Выберите 1 пользователя для редактирования!");
+            }
         }
     }
 }
