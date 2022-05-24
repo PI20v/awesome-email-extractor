@@ -12,6 +12,9 @@ namespace AwesomeEmailExtractor
 {
     public partial class MainForm : Form
     {
+        public int count;
+        public List<string> uniqueEmails;
+
         public MainForm()
         {
             InitializeComponent();
@@ -36,10 +39,10 @@ namespace AwesomeEmailExtractor
             uniqueListBox.DataSource = null;
 
             // Объявляем список уникальных e-mail-ов
-            List<string> uniqueEmails = new List<string>();
+            uniqueEmails = new List<string>();
 
             // Вызываем метод для извлечения e-mail-ов
-            int count = ExtactEmailsAlgorithm.Extract(sourceText, out uniqueEmails);
+            count = ExtactEmailsAlgorithm.Extract(sourceText, out uniqueEmails);
 
             // Выводим результат
             toolStripStatusLabel.Text = "Успех!";
@@ -79,6 +82,28 @@ namespace AwesomeEmailExtractor
         {
             AdministrationForm administrationForm = FormManager.Current.CreateForm<AdministrationForm>();
             administrationForm.ShowDialog(this);
+        }
+
+        private void exportResultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Показать окно с выбором файла
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Текстовый файл (*.txt)|*.txt";
+            saveFileDialog.FileName = "Результат.txt";
+
+            var res = saveFileDialog.ShowDialog();
+
+
+            // Сохранить результат в файл
+            if (res == DialogResult.OK)
+            {
+                string fileName = saveFileDialog.FileName;
+                string resultText = $"Количество e-mail-ов в тексте: {count}\nСписок уникальных e-mail-ов:\n{string.Join("\n", uniqueEmails)}";
+
+                System.IO.File.WriteAllText(fileName, resultText);
+
+                MessageBox.Show("E-mail-ы успешно сохранены в файл", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }
