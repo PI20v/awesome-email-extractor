@@ -36,6 +36,12 @@ namespace AwesomeEmailExtractor
 
         private void changePasswordButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(entryNewPassword.Text))
+            {
+                MessageBox.Show("Введите пароль!");
+                return;
+            }            
+
             if (!string.Equals(entryNewPassword.Text, entryRePassword.Text))
             {
                 MessageBox.Show("Пароли не совпадают!");

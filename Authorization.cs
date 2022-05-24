@@ -28,7 +28,7 @@ namespace AwesomeEmailExtractor
                 return new User(reader.GetInt32(0), reader.GetString(1), (UserRoles)reader.GetInt32(2));
             }
 
-            throw new Exception("Пользователь не найден!");
+            throw new Exception("Неверные данные для входа!");
         }
 
         public static User Register(string login, string password)

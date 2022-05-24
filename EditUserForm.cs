@@ -35,6 +35,12 @@ namespace AwesomeEmailExtractor
 
         private void submitButton_Click(object sender, EventArgs e)
         {
+            if (loginTextBox.Text.Length == 0)
+            {
+                MessageBox.Show("Логин не может быть пустым!");
+                return;
+            }
+
             AdminUtils adminUtils = new AdminUtils(Globals.currentUser);
 
             User editedUser = new User(User.ID, loginTextBox.Text, (UserRoles)roleComboBox.SelectedIndex);
