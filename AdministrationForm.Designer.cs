@@ -181,6 +181,7 @@
             this.deleteUserButton.TabIndex = 2;
             this.deleteUserButton.Text = "Удалить";
             this.deleteUserButton.UseVisualStyleBackColor = true;
+            this.deleteUserButton.Click += new System.EventHandler(this.deleteUserButton_Click);
             // 
             // AdministrationForm
             // 

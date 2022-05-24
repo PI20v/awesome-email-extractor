@@ -34,8 +34,15 @@ namespace AwesomeEmailExtractor
             AdminUtils adminUtils = new AdminUtils(Globals.currentUser);
 
             var users = adminUtils.GetAllUsers();
+            usersDataGridView.DataSource = users;
 
-            usersDataGridView.DataSource = users;            
+            List<string> columns = new List<string>() { "ID", "Логин", "Роль" };
+
+            for (int i = 0; i < usersDataGridView.Columns.Count; i++)
+            {
+                usersDataGridView.Columns[i].HeaderText = columns[i];
+                usersDataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
         }
 
         private void browseButton_Click(object sender, EventArgs e)
@@ -78,6 +85,55 @@ namespace AwesomeEmailExtractor
             } else
             {
                 MessageBox.Show("Выберите 1 пользователя для редактирования!");
+            }
+        }
+
+        private void deleteUserButton_Click(object sender, EventArgs e)
+        {
+            bool selfDelete = false;
+
+            if (usersDataGridView.SelectedRows.Count > 0)
+            {
+                DialogResult result = MessageBox.Show("Вы уверены что хотите удалить аккаунты?", "Удаление аккаунтов", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
+                {
+                    for (int i = 0; i < usersDataGridView.SelectedRows.Count; i++)
+                    {
+                        var user = usersDataGridView.SelectedRows[i].DataBoundItem as User;
+                        if (user.ID != Globals.currentUser.ID)
+                        {
+                            user.Delete();
+                        }
+                        else
+                        {
+                            selfDelete = true;
+                        }
+                    }
+
+                    if (selfDelete)
+                    {
+                        DialogResult result2 = MessageBox.Show("Вы уверены что хотите удалить СВОЙ аккаунт?", "Удаление аккаунта", MessageBoxButtons.YesNo);
+
+                        if (result2 == DialogResult.Yes)
+                        {
+                            Globals.currentUser.Delete();
+                            MessageBox.Show("Аккаунт удален!");
+
+                            this.Close();
+
+                            AuthorizationForm authorization = FormManager.Current.CreateForm<AuthorizationForm>();
+                            FormManager.Current.Navigate(this.Owner, authorization);
+                        }
+                    }
+                }
+                AdminUtils adminUtils = new AdminUtils(Globals.currentUser);
+                var users = adminUtils.GetAllUsers();
+                usersDataGridView.DataSource = users;
+            }
+            else
+            {
+                MessageBox.Show("Выберите хотя бы одного пользователя для удаления!");
             }
         }
     }
