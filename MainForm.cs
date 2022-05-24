@@ -105,5 +105,11 @@ namespace AwesomeEmailExtractor
                 MessageBox.Show("E-mail-ы успешно сохранены в файл", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HelpForm helpForm = FormManager.Current.CreateForm<HelpForm>();
+            helpForm.ShowDialog(this);
+        }
     }
 }

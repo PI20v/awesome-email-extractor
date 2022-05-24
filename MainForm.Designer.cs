@@ -36,13 +36,13 @@
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportResultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.аккаунтToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.journalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.administrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportResultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resultStatusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -134,6 +134,13 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.fileToolStripMenuItem.Text = "Файл";
             // 
+            // exportResultToolStripMenuItem
+            // 
+            this.exportResultToolStripMenuItem.Name = "exportResultToolStripMenuItem";
+            this.exportResultToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.exportResultToolStripMenuItem.Text = "Экспортировать результат";
+            this.exportResultToolStripMenuItem.Click += new System.EventHandler(this.exportResultToolStripMenuItem_Click);
+            // 
             // аккаунтToolStripMenuItem
             // 
             this.аккаунтToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -178,13 +185,7 @@
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.helpToolStripMenuItem.Text = "Справка";
-            // 
-            // exportResultToolStripMenuItem
-            // 
-            this.exportResultToolStripMenuItem.Name = "exportResultToolStripMenuItem";
-            this.exportResultToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.exportResultToolStripMenuItem.Text = "Экспортировать результат";
-            this.exportResultToolStripMenuItem.Click += new System.EventHandler(this.exportResultToolStripMenuItem_Click);
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // MainForm
             // 
