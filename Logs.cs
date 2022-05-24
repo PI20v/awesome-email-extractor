@@ -10,10 +10,23 @@ namespace AwesomeEmailExtractor
     public class Logs
     {
         public class LogData {
+            public int ID { get; set;  }
             public User User { get; set; }
             public string Date { get; set; }
             public Action Action { get; set; }
             public string Message { get; set; }
+
+            public void Delete()
+            {
+                SqliteCommand command = new SqliteCommand();
+                command.Connection = Globals.logsDb;
+                command.CommandText = "DELETE FROM logs WHERE id = @id;";
+
+                SqliteParameter idParam = new SqliteParameter("@id", ID);
+                command.Parameters.Add(idParam);
+
+                command.ExecuteNonQuery();
+            }
         }
 
         public enum Action
@@ -46,10 +59,11 @@ namespace AwesomeEmailExtractor
             {
                 logs.Add(new LogData()
                 {
+                    ID = Convert.ToInt32(reader["id"]),
                     User = user,
-                    Date = reader.GetString(0),
-                    Action = (Action)reader.GetInt32(1),
-                    Message = reader.GetString(2)
+                    Date = Convert.ToString(reader["date"]),
+                    Action = (Action)Convert.ToInt32(reader["action"]),
+                    Message = Convert.ToString(reader["message"]),
                 });
             }
 
@@ -67,7 +81,7 @@ namespace AwesomeEmailExtractor
 
             SqliteCommand command = new SqliteCommand();
             command.Connection = Globals.logsDb;
-            command.CommandText = "SELECT date, action, message FROM logs WHERE user_id = @user_id ORDER BY date DESC";
+            command.CommandText = "SELECT id, date, action, message FROM logs WHERE user_id = @user_id ORDER BY date DESC";
             command.Parameters.AddWithValue("@user_id", user.ID);
 
             return command.ExecuteReader();
@@ -82,19 +96,17 @@ namespace AwesomeEmailExtractor
 
             SqliteCommand command = new SqliteCommand();
             command.Connection = Globals.logsDb;
-            command.CommandText = "ATTACH DATABASE @dbpath AS appDB";
-            command.Parameters.AddWithValue("@dbpath", Globals.getAppDatabase());
-            command.ExecuteNonQuery();
             
             command.CommandText = @"
-                SELECT 
+                SELECT
+                    logs.id,
                     user_id,
-                    CASE WHEN appDB.users.login is NULL THEN 'Deleted_' || user_id ELSE appDB.users.login END AS login
-                    appDB.users.role,
+                    CASE WHEN appDB.users.login is NULL THEN 'Deleted_' || user_id ELSE appDB.users.login END AS login,
+                    CASE WHEN appDB.users.role_id is NULL THEN 0 ELSE appDB.users.role_id END AS role_id,
                     date,
                     action,
                     message
-                from logs LEFT JOIN appDB.users on logs.user_id = appDB.users.id ORDER BY date DESC";
+                from logs LEFT JOIN appDB.users on logs.user_id = appDB.users.id ORDER BY date DESC;";
 
             SqliteDataReader reader = command.ExecuteReader();
 
@@ -103,10 +115,15 @@ namespace AwesomeEmailExtractor
             {
                 logs.Add(new LogData()
                 {
-                    User = new User(reader.GetInt32(0), reader.GetString(1), (UserRoles)reader.GetInt32(2)),
-                    Date = reader.GetString(3),
-                    Action = (Action)reader.GetInt32(4),
-                    Message = reader.GetString(5)
+                    ID = Convert.ToInt32(reader["id"]),
+                    User = new User(
+                        Convert.ToInt32(reader["user_id"]), 
+                        Convert.ToString(reader["login"]), 
+                        (UserRoles)Convert.ToInt32(reader["role_id"])
+                    ),
+                    Date = Convert.ToString(reader["date"]),
+                    Action = (Action)Convert.ToInt32(reader["action"]),
+                    Message = Convert.ToString(reader["message"])
                 });
             }
 
@@ -136,6 +153,18 @@ namespace AwesomeEmailExtractor
             }
 
             return "";
+        }
+
+        public static void DeleteLog(LogData logData)
+        {
+            SqliteCommand command = new SqliteCommand();
+            command.Connection = Globals.logsDb;
+
+            command.CommandText = "DELETE FROM logsDB WHERE id = @id";
+
+            command.Parameters.AddWithValue("@id", logData.ID);
+
+            command.ExecuteNonQuery();
         }
     }
 }
