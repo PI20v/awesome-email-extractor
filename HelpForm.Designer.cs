@@ -60,6 +60,7 @@
             this.ClientSize = new System.Drawing.Size(652, 393);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "HelpForm";
             this.Text = "Справка";
             this.panel1.ResumeLayout(false);

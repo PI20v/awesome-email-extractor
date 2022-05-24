@@ -139,6 +139,7 @@
             this.Controls.Add(this.registerButton);
             this.Controls.Add(this.loginButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "RegistrationForm";
             this.Text = "Зарегистрироваться";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.RegistrationForm_FormClosed);

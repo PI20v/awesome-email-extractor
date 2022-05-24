@@ -104,6 +104,7 @@
             this.Controls.Add(this.entryNewPassword);
             this.Controls.Add(this.changePasswordButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "SettingsForm";
             this.Text = "Настройки";
             this.ResumeLayout(false);

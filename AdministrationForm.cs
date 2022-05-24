@@ -128,7 +128,7 @@ namespace AwesomeEmailExtractor
 
             if (usersDataGridView.SelectedRows.Count > 0)
             {
-                DialogResult result = MessageBox.Show("Вы уверены что хотите удалить аккаунты?", "Удаление аккаунтов", MessageBoxButtons.YesNo);
+                DialogResult result = MessageBox.Show("Вы уверены что хотите удалить аккаунты?", "Удаление аккаунтов", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.Yes)
                 {
@@ -147,12 +147,12 @@ namespace AwesomeEmailExtractor
 
                     if (selfDelete)
                     {
-                        DialogResult result2 = MessageBox.Show("Вы уверены что хотите удалить СВОЙ аккаунт?", "Удаление аккаунта", MessageBoxButtons.YesNo);
+                        DialogResult result2 = MessageBox.Show("Вы уверены что хотите удалить СВОЙ аккаунт?", "Удаление аккаунта", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                         if (result2 == DialogResult.Yes)
                         {
                             Globals.currentUser.Delete();
-                            MessageBox.Show("Аккаунт удален!");
+                            MessageBox.Show("Аккаунт удален!", "Аккаунт удален", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             this.Close();
 
@@ -171,7 +171,7 @@ namespace AwesomeEmailExtractor
             }
             else
             {
-                MessageBox.Show("Выберите хотя бы одного пользователя для удаления!");
+                MessageBox.Show("Выберите хотя бы одного пользователя для удаления!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -179,7 +179,7 @@ namespace AwesomeEmailExtractor
         {
             if (journalDataGridView.SelectedRows.Count > 0)
             {
-                DialogResult result = MessageBox.Show("Вы уверены что хотите удалить записи в журнале?", "Удаление записей в журнале", MessageBoxButtons.YesNo);
+                DialogResult result = MessageBox.Show("Вы уверены что хотите удалить записи в журнале?", "Удаление записей в журнале", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.Yes)
                 {
@@ -194,7 +194,7 @@ namespace AwesomeEmailExtractor
             }
             else
             {
-                MessageBox.Show("Выберите хотя бы одну запись для удаления!");
+                MessageBox.Show("Выберите хотя бы одну запись для удаления!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

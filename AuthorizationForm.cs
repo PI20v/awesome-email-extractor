@@ -23,7 +23,7 @@ namespace AwesomeEmailExtractor
             {
                 if (string.IsNullOrEmpty(entryLogin.Text) || string.IsNullOrEmpty(entryPassword.Text))
                 {
-                    MessageBox.Show("Введите логин и пароль");
+                    MessageBox.Show("Введите логин и пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -35,7 +35,7 @@ namespace AwesomeEmailExtractor
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

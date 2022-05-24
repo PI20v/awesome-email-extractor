@@ -131,6 +131,7 @@
             this.Controls.Add(this.passwordTextBox);
             this.Controls.Add(this.loginTextBox);
             this.Controls.Add(this.idTextBox);
+            this.MaximizeBox = false;
             this.Name = "EditUserForm";
             this.Text = "Редактирование";
             this.Load += new System.EventHandler(this.EditUserForm_Load);
