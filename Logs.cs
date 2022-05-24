@@ -33,7 +33,9 @@ namespace AwesomeEmailExtractor
         {
             Execute,
             Login,
-            Registration
+            Registration,
+            DeleteAccount,
+            ChangePassword
         }
 
         public static void Log(User user, Action action, Dictionary<string, object> options)
@@ -150,6 +152,14 @@ namespace AwesomeEmailExtractor
             if (action == Action.Registration)
             {
                 return "Пользователь зарегистрировался в системе.";
+            }
+            if (action == Action.DeleteAccount)
+            {
+                return "Пользователь удалил аккаунт из системы.";
+            }
+            if (action == Action.ChangePassword)
+            {
+                return "Пользователь сменил пароль.";
             }
 
             return "";
