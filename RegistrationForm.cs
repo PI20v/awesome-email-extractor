@@ -19,6 +19,12 @@ namespace AwesomeEmailExtractor
 
         private void registerButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(entryLogin.Text) || string.IsNullOrEmpty(entryPassword.Text))
+            {
+                MessageBox.Show("Введите логин и пароль!");
+                return;
+            }
+
             if (!string.Equals(entryPassword.Text, entryRePassword.Text))
             {
                 MessageBox.Show("Пароли не совпадают!");
