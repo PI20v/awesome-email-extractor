@@ -21,13 +21,13 @@ namespace AwesomeEmailExtractor
         {
             if (string.IsNullOrEmpty(entryLogin.Text) || string.IsNullOrEmpty(entryPassword.Text))
             {
-                MessageBox.Show("Введите логин и пароль!");
+                MessageBox.Show("Введите логин и пароль!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (!string.Equals(entryPassword.Text, entryRePassword.Text))
             {
-                MessageBox.Show("Пароли не совпадают!");
+                MessageBox.Show("Пароли не совпадают!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

@@ -37,7 +37,7 @@ namespace AwesomeEmailExtractor
         {
             if (loginTextBox.Text.Length == 0)
             {
-                MessageBox.Show("Логин не может быть пустым!");
+                MessageBox.Show("Логин не может быть пустым!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

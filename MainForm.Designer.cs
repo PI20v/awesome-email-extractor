@@ -54,9 +54,6 @@
             this.uniqueListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.uniqueListBox.FormattingEnabled = true;
             this.uniqueListBox.ItemHeight = 20;
-            this.uniqueListBox.Items.AddRange(new object[] {
-            "alice@example.com",
-            "bob@example.com"});
             this.uniqueListBox.Location = new System.Drawing.Point(424, 32);
             this.uniqueListBox.Name = "uniqueListBox";
             this.uniqueListBox.Size = new System.Drawing.Size(225, 324);
@@ -72,8 +69,7 @@
             this.sourceRichTextBox.Name = "sourceRichTextBox";
             this.sourceRichTextBox.Size = new System.Drawing.Size(406, 288);
             this.sourceRichTextBox.TabIndex = 1;
-            this.sourceRichTextBox.Text = "Алиса (alice@example.com) послылает Бобу (bob@example.com) сообщение.\nАдрес bob@e" +
-    "xample.com Алиса нашла на сайте example.com";
+            this.sourceRichTextBox.Text = "";
             // 
             // executeButton
             // 
@@ -95,9 +91,9 @@
             this.resultCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.resultCountLabel.Location = new System.Drawing.Point(12, 323);
             this.resultCountLabel.Name = "resultCountLabel";
-            this.resultCountLabel.Size = new System.Drawing.Size(303, 24);
+            this.resultCountLabel.Size = new System.Drawing.Size(361, 24);
             this.resultCountLabel.TabIndex = 3;
-            this.resultCountLabel.Text = "Количество e-mail-ов в тексте: 3";
+            this.resultCountLabel.Text = "Ввелите текст и нажмите \"Выполнить\"";
             // 
             // resultStatusStrip
             // 
@@ -111,8 +107,7 @@
             // toolStripStatusLabel
             // 
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(42, 17);
-            this.toolStripStatusLabel.Text = "Успех!";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(0, 17);
             // 
             // menuStrip1
             // 

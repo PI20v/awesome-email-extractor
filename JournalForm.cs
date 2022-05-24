@@ -22,9 +22,18 @@ namespace AwesomeEmailExtractor
             var logs = Logs.GetLogsList(Globals.currentUser);
 
             dataGridView1.DataSource = logs;
-            // dataGridView1.Columns["id"].Visible = false;
-            // dataGridView1.Columns[1].Visible = false;
-            dataGridView1.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            List<string> columns = new List<string>() { "Дата", "Событие", "Сообщение" };
+
+            dataGridView1.Columns["id"].Visible = false;
+            dataGridView1.Columns["user"].Visible = false;
+
+            for (int i = 0; i < columns.Count; i++)
+            {
+                dataGridView1.Columns[i + 2].HeaderText = columns[i];
+            };
+
+            dataGridView1.Columns["message"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
