@@ -10,17 +10,32 @@ namespace AwesomeEmailExtractor
     public class Logs
     {
         public class LogData {
-            public User user;
-            public string date;
-            public Action action;
-            public string message;
+            public int ID { get; set;  }
+            public User User { get; set; }
+            public string Date { get; set; }
+            public Action Action { get; set; }
+            public string Message { get; set; }
+
+            public void Delete()
+            {
+                SqliteCommand command = new SqliteCommand();
+                command.Connection = Globals.logsDb;
+                command.CommandText = "DELETE FROM logs WHERE id = @id;";
+
+                SqliteParameter idParam = new SqliteParameter("@id", ID);
+                command.Parameters.Add(idParam);
+
+                command.ExecuteNonQuery();
+            }
         }
 
         public enum Action
         {
             Execute,
             Login,
-            Registration
+            Registration,
+            DeleteAccount,
+            ChangePassword
         }
 
         public static void Log(User user, Action action, Dictionary<string, object> options)
@@ -37,48 +52,63 @@ namespace AwesomeEmailExtractor
             command.ExecuteNonQuery();
         }
 
-        public static List<LogData> GetLogs(User user)
+        public static List<LogData> GetLogsList(User user)
         {
-            SqliteCommand command = new SqliteCommand();
-            command.Connection = Globals.logsDb;
-
-            command.CommandText = "SELECT date, action, message FROM logs WHERE user_id = @user_id ORDER BY date DESC";
-            command.Parameters.AddWithValue("@user_id", user.ID);
-
-            SqliteDataReader reader = command.ExecuteReader();
+            SqliteDataReader reader = GetLogsDataReader(user);
 
             List<LogData> logs = new List<LogData>();
             while (reader.Read())
             {
                 logs.Add(new LogData()
                 {
-                    user = user,
-                    date = reader.GetString(0),
-                    action = (Action)reader.GetInt32(1),
-                    message = reader.GetString(2)
+                    ID = Convert.ToInt32(reader["id"]),
+                    User = user,
+                    Date = Convert.ToString(reader["date"]),
+                    Action = (Action)Convert.ToInt32(reader["action"]),
+                    Message = Convert.ToString(reader["message"]),
                 });
             }
+
+            reader.Close();
 
             return logs;
         }
 
-        public static List<LogData> GetLogs()
+        private static SqliteDataReader GetLogsDataReader(User user)
         {
+            if (Globals.currentUser.ID != user.ID && Globals.currentUser.Role != UserRoles.ADMIN)
+            {
+                throw new Exception("У вас нет прав на просмотр логов");
+            }
+
             SqliteCommand command = new SqliteCommand();
             command.Connection = Globals.logsDb;
-            command.CommandText = "ATTACH DATABASE @dbpath AS appDB";
-            command.Parameters.AddWithValue("@dbpath", Globals.getAppDatabase());
-            command.ExecuteNonQuery();
+            command.CommandText = "SELECT id, date, action, message FROM logs WHERE user_id = @user_id ORDER BY date DESC";
+            command.Parameters.AddWithValue("@user_id", user.ID);
+
+            return command.ExecuteReader();
+        }        
+
+        public static List<LogData> GetLogsList()
+        {
+            if (Globals.currentUser.Role != UserRoles.ADMIN)
+            {
+                throw new Exception("У вас нет прав на просмотр логов");
+            }
+
+            SqliteCommand command = new SqliteCommand();
+            command.Connection = Globals.logsDb;
             
             command.CommandText = @"
-                SELECT 
+                SELECT
+                    logs.id,
                     user_id,
-                    CASE WHEN appDB.users.login is NULL THEN 'Deleted_' || user_id ELSE appDB.users.login END AS login
-                    appDB.users.role,
+                    CASE WHEN appDB.users.login is NULL THEN 'Deleted_' || user_id ELSE appDB.users.login END AS login,
+                    CASE WHEN appDB.users.role_id is NULL THEN 0 ELSE appDB.users.role_id END AS role_id,
                     date,
                     action,
                     message
-                from logs LEFT JOIN appDB.users on logs.user_id = appDB.users.id ORDER BY date DESC";
+                from logs LEFT JOIN appDB.users on logs.user_id = appDB.users.id ORDER BY date DESC;";
 
             SqliteDataReader reader = command.ExecuteReader();
 
@@ -87,10 +117,15 @@ namespace AwesomeEmailExtractor
             {
                 logs.Add(new LogData()
                 {
-                    user = new User(reader.GetInt32(0), reader.GetString(1), (UserRoles)reader.GetInt32(2)),
-                    date = reader.GetString(3),
-                    action = (Action)reader.GetInt32(4),
-                    message = reader.GetString(5)
+                    ID = Convert.ToInt32(reader["id"]),
+                    User = new User(
+                        Convert.ToInt32(reader["user_id"]), 
+                        Convert.ToString(reader["login"]), 
+                        (UserRoles)Convert.ToInt32(reader["role_id"])
+                    ),
+                    Date = Convert.ToString(reader["date"]),
+                    Action = (Action)Convert.ToInt32(reader["action"]),
+                    Message = Convert.ToString(reader["message"])
                 });
             }
 
@@ -118,8 +153,28 @@ namespace AwesomeEmailExtractor
             {
                 return "Пользователь зарегистрировался в системе.";
             }
+            if (action == Action.DeleteAccount)
+            {
+                return "Пользователь удалил аккаунт из системы.";
+            }
+            if (action == Action.ChangePassword)
+            {
+                return "Пользователь сменил пароль.";
+            }
 
             return "";
+        }
+
+        public static void DeleteLog(LogData logData)
+        {
+            SqliteCommand command = new SqliteCommand();
+            command.Connection = Globals.logsDb;
+
+            command.CommandText = "DELETE FROM logsDB WHERE id = @id";
+
+            command.Parameters.AddWithValue("@id", logData.ID);
+
+            command.ExecuteNonQuery();
         }
     }
 }

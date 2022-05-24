@@ -19,12 +19,13 @@ namespace AwesomeEmailExtractor
 
         private void deleteAccountButton_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Вы уверены что хотите удалить аккаунт?", "Удаление аккаунта", MessageBoxButtons.YesNo);
+            DialogResult result = MessageBox.Show("Вы уверены что хотите удалить аккаунт?", "Удаление аккаунта", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)
             {
                 Globals.currentUser.Delete();
-                MessageBox.Show("Аккаунт удален!");
+                Logs.Log(Globals.currentUser, Logs.Action.DeleteAccount, new Dictionary<string, object>());
+                MessageBox.Show("Аккаунт удален!", "Аккаунт удален", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.Close();
                 
@@ -35,14 +36,21 @@ namespace AwesomeEmailExtractor
 
         private void changePasswordButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(entryNewPassword.Text))
+            {
+                MessageBox.Show("Введите пароль!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }            
+
             if (!string.Equals(entryNewPassword.Text, entryRePassword.Text))
             {
-                MessageBox.Show("Пароли не совпадают!");
+                MessageBox.Show("Пароли не совпадают!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             Globals.currentUser.ChangePassword(entryNewPassword.Text);
-            MessageBox.Show("Пароль изменен!");
+            Logs.Log(Globals.currentUser, Logs.Action.ChangePassword, new Dictionary<string, object>());
+            MessageBox.Show("Пароль изменен!", "Пароль изменен", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

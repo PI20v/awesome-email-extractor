@@ -66,12 +66,12 @@ namespace AwesomeEmailExtractor
             command.CommandText = "CREATE TABLE IF NOT EXISTS logs_actions (id INTEGER PRIMARY KEY, name TEXT NOT NULL)";
             command.ExecuteNonQuery();
 
-            command.CommandText = "INSERT OR IGNORE INTO logs_actions (id, name) VALUES (0, 'Выполнение'), (1, 'Вход'), (2, 'Регистрация');";
+            command.CommandText = "CREATE TABLE IF NOT EXISTS logs (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, date TEXT NOT NULL, action INTEGER NOT NULL, message TEXT NOT NULL);";
             command.ExecuteNonQuery();
 
-            command.CommandText = "CREATE TABLE IF NOT EXISTS logs (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, date TEXT NOT NULL, action INTEGER NOT NULL, message TEXT NOT NULL, FOREIGN KEY(action) REFERENCES logs_actions(id));";
+            command.CommandText = "ATTACH DATABASE @dbpath AS appDB";
+            command.Parameters.AddWithValue("@dbpath", Globals.getAppDatabase());
             command.ExecuteNonQuery();
-
         }
 
         public static void CreateTables()

@@ -76,6 +76,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdministrationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdministrationForm.Designer.cs">
+      <DependentUpon>AdministrationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Authorization.cs" />
     <Compile Include="AuthorizationForm.cs">
       <SubType>Form</SubType>
@@ -83,9 +89,27 @@
     <Compile Include="AuthorizationForm.Designer.cs">
       <DependentUpon>AuthorizationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditUserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditUserForm.Designer.cs">
+      <DependentUpon>EditUserForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExtactEmailsAlgorithm.cs" />
     <Compile Include="FormManager.cs" />
     <Compile Include="Globals.cs" />
+    <Compile Include="HelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelpForm.Designer.cs">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JournalForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JournalForm.Designer.cs">
+      <DependentUpon>JournalForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logs.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -107,8 +131,21 @@
     <Compile Include="SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AdministrationForm.resx">
+      <DependentUpon>AdministrationForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="AuthorizationForm.resx">
       <DependentUpon>AuthorizationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditUserForm.resx">
+      <DependentUpon>EditUserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelpForm.resx">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JournalForm.resx">
+      <DependentUpon>JournalForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

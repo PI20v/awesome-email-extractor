@@ -19,9 +19,15 @@ namespace AwesomeEmailExtractor
 
         private void registerButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(entryLogin.Text) || string.IsNullOrEmpty(entryPassword.Text))
+            {
+                MessageBox.Show("Введите логин и пароль!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (!string.Equals(entryPassword.Text, entryRePassword.Text))
             {
-                MessageBox.Show("Пароли не совпадают!");
+                MessageBox.Show("Пароли не совпадают!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -35,7 +41,7 @@ namespace AwesomeEmailExtractor
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

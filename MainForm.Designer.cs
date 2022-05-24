@@ -36,7 +36,9 @@
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportResultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.аккаунтToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.journalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.administrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,12 +54,9 @@
             this.uniqueListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.uniqueListBox.FormattingEnabled = true;
             this.uniqueListBox.ItemHeight = 20;
-            this.uniqueListBox.Items.AddRange(new object[] {
-            "alice@example.com",
-            "bob@example.com"});
             this.uniqueListBox.Location = new System.Drawing.Point(424, 32);
             this.uniqueListBox.Name = "uniqueListBox";
-            this.uniqueListBox.Size = new System.Drawing.Size(225, 304);
+            this.uniqueListBox.Size = new System.Drawing.Size(225, 324);
             this.uniqueListBox.TabIndex = 0;
             // 
             // sourceRichTextBox
@@ -70,8 +69,7 @@
             this.sourceRichTextBox.Name = "sourceRichTextBox";
             this.sourceRichTextBox.Size = new System.Drawing.Size(406, 288);
             this.sourceRichTextBox.TabIndex = 1;
-            this.sourceRichTextBox.Text = "Алиса (alice@example.com) послылает Бобу (bob@example.com) сообщение.\nАдрес bob@e" +
-    "xample.com Алиса нашла на сайте example.com";
+            this.sourceRichTextBox.Text = "";
             // 
             // executeButton
             // 
@@ -93,9 +91,9 @@
             this.resultCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.resultCountLabel.Location = new System.Drawing.Point(12, 323);
             this.resultCountLabel.Name = "resultCountLabel";
-            this.resultCountLabel.Size = new System.Drawing.Size(303, 24);
+            this.resultCountLabel.Size = new System.Drawing.Size(363, 24);
             this.resultCountLabel.TabIndex = 3;
-            this.resultCountLabel.Text = "Количество e-mail-ов в тексте: 3";
+            this.resultCountLabel.Text = "Введите текст и нажмите \"Выполнить\"";
             // 
             // resultStatusStrip
             // 
@@ -109,8 +107,7 @@
             // toolStripStatusLabel
             // 
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(42, 17);
-            this.toolStripStatusLabel.Text = "Успех!";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(0, 17);
             // 
             // menuStrip1
             // 
@@ -126,19 +123,36 @@
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportResultToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.fileToolStripMenuItem.Text = "Файл";
             // 
+            // exportResultToolStripMenuItem
+            // 
+            this.exportResultToolStripMenuItem.Name = "exportResultToolStripMenuItem";
+            this.exportResultToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.exportResultToolStripMenuItem.Text = "Экспортировать результат";
+            this.exportResultToolStripMenuItem.Click += new System.EventHandler(this.exportResultToolStripMenuItem_Click);
+            // 
             // аккаунтToolStripMenuItem
             // 
             this.аккаунтToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.journalToolStripMenuItem,
             this.settingsToolStripMenuItem,
             this.administrationToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.аккаунтToolStripMenuItem.Name = "аккаунтToolStripMenuItem";
             this.аккаунтToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.аккаунтToolStripMenuItem.Text = "Аккаунт";
+            // 
+            // journalToolStripMenuItem
+            // 
+            this.journalToolStripMenuItem.Name = "journalToolStripMenuItem";
+            this.journalToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.journalToolStripMenuItem.Text = "Журнал";
+            this.journalToolStripMenuItem.Click += new System.EventHandler(this.journalToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -152,6 +166,7 @@
             this.administrationToolStripMenuItem.Name = "administrationToolStripMenuItem";
             this.administrationToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.administrationToolStripMenuItem.Text = "Администрирование";
+            this.administrationToolStripMenuItem.Click += new System.EventHandler(this.administrationToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -165,6 +180,7 @@
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.helpToolStripMenuItem.Text = "Справка";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -180,7 +196,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(642, 438);
             this.Name = "MainForm";
-            this.Text = "Main Form";
+            this.Text = "Главное окно";
             this.resultStatusStrip.ResumeLayout(false);
             this.resultStatusStrip.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -205,6 +221,8 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem administrationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem journalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportResultToolStripMenuItem;
     }
 }
 
