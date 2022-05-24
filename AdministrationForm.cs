@@ -43,6 +43,17 @@ namespace AwesomeEmailExtractor
                 usersDataGridView.Columns[i].HeaderText = columns[i];
                 usersDataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
+
+            var logs = Logs.GetLogsList();
+            journalDataGridView.DataSource = logs;
+
+            columns = new List<string>() { "ID", "Пользователь", "Дата", "Событие", "Сообщение" };
+
+            for (int i = 0; i < journalDataGridView.Columns.Count; i++)
+            {
+                journalDataGridView.Columns[i].HeaderText = columns[i];
+                journalDataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
         }
 
         private void browseButton_Click(object sender, EventArgs e)
@@ -68,6 +79,26 @@ namespace AwesomeEmailExtractor
 
         }
 
+        private void journalDataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            if (journalDataGridView.SelectedRows.Count > 0)
+            {
+                var row = journalDataGridView.SelectedRows[0].DataBoundItem as Logs.LogData;
+
+                dateLabel.Text = row.Date;
+                userLabel.Text = $"{row.User.Login} ({row.User.ID}) - {row.User.Role}";
+                actionLabel.Text = row.Action.ToString();
+                messageRichTextBox.Text = row.Message;
+            }
+            else
+            {
+                dateLabel.Text = "";
+                actionLabel.Text = "";
+                userLabel.Text = "";
+                messageRichTextBox.Text = "";
+            }
+        }
+
         private void editUserButton_Click(object sender, EventArgs e)
         {
             if (usersDataGridView.SelectedRows.Count == 1)
@@ -82,6 +113,9 @@ namespace AwesomeEmailExtractor
                 AdminUtils adminUtils = new AdminUtils(Globals.currentUser);
                 var users = adminUtils.GetAllUsers();
                 usersDataGridView.DataSource = users;
+
+                var logs = Logs.GetLogsList();
+                journalDataGridView.DataSource = logs;
             } else
             {
                 MessageBox.Show("Выберите 1 пользователя для редактирования!");
@@ -126,14 +160,41 @@ namespace AwesomeEmailExtractor
                             FormManager.Current.Navigate(this.Owner, authorization);
                         }
                     }
+
+                    AdminUtils adminUtils = new AdminUtils(Globals.currentUser);
+                    var users = adminUtils.GetAllUsers();
+                    usersDataGridView.DataSource = users;
+
+                    var logs = Logs.GetLogsList();
+                    journalDataGridView.DataSource = logs;
                 }
-                AdminUtils adminUtils = new AdminUtils(Globals.currentUser);
-                var users = adminUtils.GetAllUsers();
-                usersDataGridView.DataSource = users;
             }
             else
             {
                 MessageBox.Show("Выберите хотя бы одного пользователя для удаления!");
+            }
+        }
+
+        private void deleteJournalButton_Click(object sender, EventArgs e)
+        {
+            if (journalDataGridView.SelectedRows.Count > 0)
+            {
+                DialogResult result = MessageBox.Show("Вы уверены что хотите удалить записи в журнале?", "Удаление записей в журнале", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
+                {
+                    for (int i = 0; i < journalDataGridView.SelectedRows.Count; i++)
+                    {
+                        var logData = journalDataGridView.SelectedRows[i].DataBoundItem as Logs.LogData;
+                        logData.Delete();
+                    }
+                    var logs = Logs.GetLogsList();
+                    journalDataGridView.DataSource = logs;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите хотя бы одну запись для удаления!");
             }
         }
     }

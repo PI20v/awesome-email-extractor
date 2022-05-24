@@ -121,9 +121,9 @@ namespace AwesomeEmailExtractor
             command.ExecuteNonQuery();
         }
 
-        new public string ToString()
+        public override string ToString()
         {
-            return this.Login;
+            return Login;
         }
     }
 

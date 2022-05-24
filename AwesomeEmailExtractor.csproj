@@ -127,6 +127,7 @@
     </Compile>
     <EmbeddedResource Include="AdministrationForm.resx">
       <DependentUpon>AdministrationForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="AuthorizationForm.resx">
       <DependentUpon>AuthorizationForm.cs</DependentUpon>

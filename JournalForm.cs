@@ -22,17 +22,18 @@ namespace AwesomeEmailExtractor
             var logs = Logs.GetLogsList(Globals.currentUser);
 
             dataGridView1.DataSource = logs;
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            // dataGridView1.Columns["id"].Visible = false;
+            // dataGridView1.Columns[1].Visible = false;
+            dataGridView1.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count > 0)
             {
-                dataLabel.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
-                actionLabel.Text = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
-                richTextBox1.Text = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
+                dataLabel.Text = dataGridView1.SelectedRows[0].Cells["date"].Value.ToString();
+                actionLabel.Text = dataGridView1.SelectedRows[0].Cells["action"].Value.ToString();
+                richTextBox1.Text = dataGridView1.SelectedRows[0].Cells["message"].Value.ToString();
             } else {
                 dataLabel.Text = "";
                 actionLabel.Text = "";
