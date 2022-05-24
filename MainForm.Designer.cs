@@ -196,7 +196,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(642, 438);
             this.Name = "MainForm";
-            this.Text = "Main Form";
+            this.Text = "Главное окно";
             this.resultStatusStrip.ResumeLayout(false);
             this.resultStatusStrip.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
