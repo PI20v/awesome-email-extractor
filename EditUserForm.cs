@@ -45,14 +45,23 @@ namespace AwesomeEmailExtractor
 
             User editedUser = new User(User.ID, loginTextBox.Text, (UserRoles)roleComboBox.SelectedIndex);
 
-            if (passwordTextBox.Text != "")
-            {
-                adminUtils.editUser(editedUser, passwordTextBox.Text);
-            }
-            else
+            try
             {
 
-                adminUtils.editUser(editedUser);
+                if (passwordTextBox.Text != "")
+                {
+                    adminUtils.editUser(editedUser, passwordTextBox.Text);
+                }
+                else
+                {
+
+                    adminUtils.editUser(editedUser);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             this.Close();
