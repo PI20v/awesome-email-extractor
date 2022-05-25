@@ -111,5 +111,24 @@ namespace AwesomeEmailExtractor
             HelpForm helpForm = FormManager.Current.CreateForm<HelpForm>();
             helpForm.ShowDialog(this);
         }
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Показать окно с выбором файла
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Текстовый файл (*.txt)|*.txt";
+
+            var res = openFileDialog.ShowDialog();
+
+            // Загрузить текст из файла
+            if (res == DialogResult.OK)
+            {
+                string fileName = openFileDialog.FileName;
+                string sourceText = System.IO.File.ReadAllText(fileName);
+
+                sourceRichTextBox.Text = sourceText;
+            }
+            
+        }
     }
 }

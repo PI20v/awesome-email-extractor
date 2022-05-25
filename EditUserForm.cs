@@ -54,7 +54,6 @@ namespace AwesomeEmailExtractor
                 }
                 else
                 {
-
                     adminUtils.editUser(editedUser);
                 }
             }
